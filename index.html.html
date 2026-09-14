@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JEEVAN SETHU - Panchayat-Level Blood Donation Volunteer Network</title>
+
+<style>
+    * { box-sizing: border-box; }
+
+    body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: #eef2f3;
+        color: #333;
+    }
+
+    header {
+        background: linear-gradient(135deg, #7b1e2b, #c0392b);
+        color: white;
+        padding: 30px 20px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0,0,0,.18);
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 38px;
+        letter-spacing: 2px;
+    }
+
+    header h2 {
+        margin: 6px 0;
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+    header p {
+        margin: 8px 0 0;
+        font-size: 16px;
+    }
+
+    .container {
+        max-width: 1150px;
+        margin: auto;
+        padding: 22px;
+    }
+
+    .alert-box {
+        background: #d9534f;
+        color: white;
+        padding: 18px;
+        border-radius: 10px;
+        margin-bottom: 22px;
+        box-shadow: 0 4px 12px rgba(0,0,0,.12);
+    }
+
+    .alert-box h3 {
+        margin: 0 0 8px;
+        font-size: 20px;
+    }
+
+    .card {
+        background: white;
+        padding: 22px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,.07);
+        margin-bottom: 22px;
+    }
+
+    .card h2 {
+        color: #7b1e2b;
+        border-bottom: 2px solid #7b1e2b;
+        padding-bottom: 7px;
+        margin-top: 0;
+    }
+
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+    }
+
+    .grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+    }
+
+    .form-group {
+        margin-bottom: 14px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 600;
+        color: #34495e;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 11px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: bold;
+        color: white;
+        background: #27ae60;
+    }
+
+    .btn:hover { opacity: .9; }
+
+    .btn-danger { background: #c0392b; }
+
+    .btn-secondary {
+        background: #34495e;
+        margin-top: 8px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 12px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+        font-size: 14px;
+    }
+
+    th {
+        background: #7b1e2b;
+        color: white;
+    }
+
+    tr:nth-child(even) {
+        background: #f8f8f8;
+    }
+
+    .active {
+        color: #16803c;
+        font-weight: bold;
+    }
+
+    .section-number {
+        display: inline-block;
+        background: #7b1e2b;
+        color: white;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        line-height: 30px;
+        margin-right: 7px;
+    }
+
+    .phone-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+    }
+
+    .phone-simulation {
+        background: #292929;
+        border: 6px solid #444;
+        border-radius: 18px;
+        padding: 10px;
+        color: white;
+        min-height: 255px;
+    }
+
+    .phone-title {
+        text-align: center;
+        font-weight: bold;
+        color: #ddd;
+        margin-bottom: 8px;
+    }
+
+    .phone-screen {
+        background: #171717;
+        border-radius: 10px;
+        padding: 14px;
+        min-height: 215px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .alarm-popup {
+        background: #e74c3c;
+        padding: 14px;
+        border-radius: 8px;
+        display: none;
+        animation: blink 1s infinite;
+    }
+
+    .action-group {
+        display: flex;
+        gap: 8px;
+        margin-top: 10px;
+    }
+
+    .accept, .reject {
+        flex: 1;
+        padding: 9px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        border: none;
+    }
+
+    .accept {
+        background: white;
+        color: #16803c;
+    }
+
+    .reject {
+        background: #333;
+        color: white;
+        border: 1px solid white;
+    }
+
+    .status-box {
+        display: none;
+        margin-top: 15px;
+        padding: 13px;
+        border-radius: 7px;
+        background: #f4f6f7;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .info-box {
+        background: #f8f9fa;
+        border-left: 4px solid #7b1e2b;
+        padding: 12px;
+        margin-top: 12px;
+    }
+
+    footer {
+        text-align: center;
+        background: #2c3e50;
+        color: white;
+        padding: 18px;
+        margin-top: 25px;
+    }
+
+    @keyframes blink {
+        0% { opacity: 1; }
+        50% { opacity: .65; }
+        100% { opacity: 1; }
+    }
+
+    @media (max-width: 850px) {
+        .grid-2, .grid-3, .phone-grid {
+            grid-template-columns: 1fr;
+        }
+
+        header h1 { font-size: 30px; }
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>JEEVAN SETHU</h1>
+    <h2>A Panchayat-Level Blood Donation Volunteer Network</h2>
+    <p>ആപൽഘട്ടങ്ങളിൽ നമ്മുടെ നാടിനായി ഒന്നിച്ച് അണിനിരക്കാം</p>
+</header>
+
+<div class="container">
+
+    <!-- 1. Emergency Alert -->
+    <div class="alert-box">
+        <h3>🚨 അടിയന്തിര അറിയിപ്പ് (Emergency Alert)</h3>
+        <p>
+            നെടുങ്കുന്നം ഏരിയയിൽ നാളെ രാവിലെ O+ve രക്തം അടിയന്തിരമായി ആവശ്യമുണ്ട്.
+            രജിസ്റ്റർ ചെയ്ത സന്നദ്ധരായ വോളന്റിയർമാർ ഉടൻ പ്രതികരിക്കുക.
+        </p>
+    </div>
+
+    <!-- 2. Volunteer Registration + Database -->
+    <div class="grid-2">
+
+        <div class="card">
+            <h2><span class="section-number">1</span>സന്നദ്ധപ്രവർത്തകനാകൂ (Volunteer Registration)</h2>
+
+            <p>
+                അടിയന്തിര സാഹചര്യങ്ങളിൽ സഹായിക്കാൻ താല്പര്യമുള്ളവർ താഴെ രജിസ്റ്റർ ചെയ്യുക.
+            </p>
+
+            <form id="volunteerForm" onsubmit="registerVolunteer(event)">
+
+                <div class="form-group">
+                    <label for="vName">പൂർണ്ണമായ പേര് (Full Name)</label>
+                    <input type="text" id="vName" required placeholder="പേര് നൽകുക">
+                </div>
+
+                <div class="form-group">
+                    <label for="vPhone">ഫോൺ നമ്പർ (Phone Number)</label>
+                    <input type="tel" id="vPhone" required maxlength="10"
+                           placeholder="10 digit mobile number">
+                </div>
+
+                <div class="form-group">
+                    <label for="vBlood">രക്തഗ്രൂപ്പ് (Blood Group)</label>
+                    <select id="vBlood" required>
+                        <option value="">തിരഞ്ഞെടുക്കുക</option>
+                        <option value="A+">A +ve</option>
+                        <option value="A-">A -ve</option>
+                        <option value="B+">B +ve</option>
+                        <option value="B-">B -ve</option>
+                        <option value="O+">O +ve</option>
+                        <option value="O-">O -ve</option>
+                        <option value="AB+">AB +ve</option>
+                        <option value="AB-">AB -ve</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="vSkill">പ്രത്യേക കഴിവ് (Special Skill)</label>
+                    <select id="vSkill">
+                        <option value="General Volunteer">സാധാരണ സന്നദ്ധപ്രവർത്തനം</option>
+                        <option value="First Aid Support">ഫസ്റ്റ് എയ്ഡ് അറിയാം</option>
+                        <option value="Rescue / Swimming">നീന്തൽ / റെസ്ക്യൂ</option>
+                        <option value="Driver (Own Vehicle)">ഡ്രൈവിംഗ് / സ്വന്തം വാഹനം</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn">രജിസ്റ്റർ ചെയ്യുക (Register Now)</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2><span class="section-number">2</span>Active Volunteers Database</h2>
+
+            <p style="font-size:14px;color:#666;">
+                പുതിയ രജിസ്ട്രേഷൻ ഈ ഡെമോ ലിസ്റ്റിൽ ഉടൻ കാണിക്കും.
+            </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Blood</th>
+                        <th>Skill</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="volunteerTable">
+                    <tr>
+                        <td>Rahul Kumar</td>
+                        <td>O+</td>
+                        <td>Rescue / Swimming</td>
+                        <td class="active">● Active</td>
+                    </tr>
+                    <tr>
+                        <td>Anjali S.</td>
+                        <td>A+</td>
+                        <td>First Aid Support</td>
+                        <td class="active">● Active</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <!-- 3. Active Events -->
+    <div class="card">
+        <h2><span class="section-number">3</span>നടന്നുകൊണ്ടിരിക്കുന്ന പ്രവർത്തനങ്ങൾ (Active Events)</h2>
+        <ul>
+            <li><b>ബ്ലഡ് ഡൊണേഷൻ ഡ്രൈവ്</b> - ഗവൺമെന്റ് ഹോസ്പിറ്റൽ (നാളെ രാവിലെ 9 മണി)</li>
+            <li><b></b> - ടൗൺ ഏരിയ (വരുന്ന ഞായറാഴ്ച)</li>
+        </ul>
+    </div>
+
+    <!-- 4. Patient Request -->
+    <div class="grid-2">
+
+        <div class="card">
+            <h2><span class="section-number">4</span>Need Blood? (Patient Request)</h2>
+
+            <p>
+                ഹോസ്പിറ്റലിനോ രോഗിക്കോ അടിയന്തിരമായി രക്തം ആവശ്യമുണ്ടെങ്കിൽ
+                ഇവിടെ റിക്വസ്റ്റ് നൽകാം.
+            </p>
+
+            <form onsubmit="sendEmergency(event)">
+
+                <div class="form-group">
+                    <label for="hospital">Hospital Name</label>
+                    <input type="text" id="hospital"
+                           value="Nedumkunnam Taluk Hospital" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="requiredBlood">Required Blood Group</label>
+                    <select id="requiredBlood" required>
+                        <option value="O+">O +ve</option>
+                        <option value="A+">A +ve</option>
+                        <option value="B+">B +ve</option>
+                        <option value="AB+">AB +ve</option>
+                        <option value="A-">A -ve</option>
+                        <option value="B-">B -ve</option>
+                        <option value="O-">O -ve</option>
+                        <option value="AB-">AB -ve</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-danger">
+                    🚨 SEND EMERGENCY ALERT
+                </button>
+            </form>
+
+            <div class="status-box" id="patientStatus">
+                <span id="patientStatusText"></span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><span class="section-number">5</span>How JEEVAN SETHU Works</h2>
+
+            <div class="info-box">
+                <b>Step 1:</b> Volunteer registers with name, phone, blood group and skills.
+            </div>
+
+            <div class="info-box">
+                <b>Step 2:</b> Hospital / authorized requester sends an emergency blood request.
+            </div>
+
+            <div class="info-box">
+                <b>Step 3:</b> Matching blood-group volunteers receive the alert.
+            </div>
+
+            <div class="info-box">
+                <b>Step 4:</b> A volunteer can Accept or Reject the request.
+            </div>
+
+            <div class="info-box">
+                <b>Step 5:</b> Once one volunteer accepts, the request is marked as matched.
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 5. Smart Dispatch Demo -->
+    <div class="card">
+        <h2><span class="section-number">6</span>Smart Dispatch System with Accept / Reject Logic</h2>
+
+        <p>
+            ഒരേ സമയം പല O+ve വോളന്റിയർമാർക്കും അലേർട്ട് പോകുന്ന സാഹചര്യം
+            ഈ ഡെമോ കാണിക്കുന്നു. ഒരാൾ <b>ACCEPT</b> ചെയ്താൽ മറ്റുള്ളവർക്ക്
+            ആ റിക്വസ്റ്റ് ഇനി ലഭ്യമല്ല. രണ്ടുപേരും <b>REJECT</b> ചെയ്താൽ
+            സിസ്റ്റം അടുത്ത വോളന്റിയറെ തേടുന്നതായി കാണിക്കും.
+        </p>
+
+        <div class="phone-grid">
+
+            <!-- Rahul -->
+            <div class="phone-simulation">
+                <div class="phone-title">📱 Rahul's Phone — O+ve</div>
+
+                <div class="phone-screen">
+
+                    <div class="alarm-popup" id="rahulAlarm">
+                        <h3 style="margin:0 0 6px;">🚨 EMERGENCY ALERT</h3>
+                        <p id="rahulDetails" style="font-size:13px;">
+                            O+ve blood required
+                        </p>
+
+                        <div class="action-group">
+                            <button class="accept" onclick="acceptRequest('Rahul')">
+                                ACCEPT
+                            </button>
+                            <button class="reject" onclick="rejectRequest('Rahul')">
+                                REJECT
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="rahulStatus" style="color:#999;">
+                        App Standby...<br>
+                        System Monitoring
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Akhil -->
+            <div class="phone-simulation">
+                <div class="phone-title">📱 Akhil's Phone — O+ve</div>
+
+                <div class="phone-screen">
+
+                    <div class="alarm-popup" id="akhilAlarm">
+                        <h3 style="margin:0 0 6px;">🚨 EMERGENCY ALERT</h3>
+                        <p id="akhilDetails" style="font-size:13px;">
+                            O+ve blood required
+                        </p>
+
+                        <div class="action-group">
+                            <button class="accept" onclick="acceptRequest('Akhil')">
+                                ACCEPT
+                            </button>
+                            <button class="reject" onclick="rejectRequest('Akhil')">
+                                REJECT
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="akhilStatus" style="color:#999;">
+                        App Standby...<br>
+                        System Monitoring
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 6. Demo Explanation -->
+    <div class="card">
+        <h2><span class="section-number">7</span>Smart Conflict Resolution Demo</h2>
+
+        <p>
+            <b>Example:</b> O+ve രക്തം ആവശ്യപ്പെട്ടാൽ Rahul, Akhil എന്നീ
+            matching volunteers-ന്റെ ഫോണുകളിൽ ഒരേസമയം alert വരുന്നു.
+        </p>
+
+        <ul>
+            <li>Rahul ആദ്യം ACCEPT ചെയ്താൽ → Rahul matched.</li>
+            <li>Akhil-ന് → Another volunteer is already responding.</li>
+            <li>Rahul REJECT ചെയ്താൽ → Akhil-ന് alert തുടരാം.</li>
+            <li>രണ്ടുപേരും REJECT ചെയ്താൽ → Request remains unmatched.</li>
+        </ul>
+    </div>
+
+</div>
+
+<footer>
+    <b>JEEVAN SETHU</b><br>
+    Panchayat-Level Blood Donation Volunteer Network<br>
+    <small>Demo Prototype — For presentation and concept demonstration</small>
+</footer>
+
+<script>
+let requestActive = false;
+let requestAccepted = false;
+let statusTracker = {
+    Rahul: "waiting",
+    Akhil: "waiting"
+};
+
+function registerVolunteer(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("vName").value.trim();
+    const phone = document.getElementById("vPhone").value.trim();
+    const blood = document.getElementById("vBlood").value;
+    const skill = document.getElementById("vSkill").value;
+
+    if (!/^[0-9]{10}$/.test(phone)) {
+        alert("Please enter a valid 10 digit phone number.");
+        return;
+    }
+
+    const table = document.getElementById("volunteerTable");
+    const row = table.insertRow(0);
+
+    row.insertCell(0).textContent = name;
+    row.insertCell(1).textContent = blood;
+    row.insertCell(2).textContent = skill;
+
+    const statusCell = row.insertCell(3);
+    statusCell.textContent = "● Active";
+    statusCell.className = "active";
+
+    alert("Registration successful!\n" + name + " has been added to the volunteer list.");
+
+    document.getElementById("volunteerForm").reset();
+}
+
+function sendEmergency(event) {
+    event.preventDefault();
+
+    const hospital = document.getElementById("hospital").value;
+    const blood = document.getElementById("requiredBlood").value;
+
+    requestActive = true;
+    requestAccepted = false;
+    statusTracker.Rahul = "waiting";
+    statusTracker.Akhil = "waiting";
+
+    document.getElementById("patientStatus").style.display = "block";
+    document.getElementById("patientStatusText").textContent =
+        "🚨 ALERT SENT! Matching " + blood + " volunteers...";
+
+    document.getElementById("patientStatusText").style.color = "#c0392b";
+
+    document.getElementById("rahulStatus").style.display = "none";
+    document.getElementById("akhilStatus").style.display = "none";
+
+    document.getElementById("rahulAlarm").style.display = "block";
+    document.getElementById("akhilAlarm").style.display = "block";
+
+    document.getElementById("rahulDetails").textContent =
+        "Need " + blood + " blood at " + hospital;
+
+    document.getElementById("akhilDetails").textContent =
+        "Need " + blood + " blood at " + hospital;
+}
+
+function acceptRequest(name) {
+
+    if (!requestActive || requestAccepted) return;
+
+    requestAccepted = true;
+    statusTracker.Rahul = name === "Rahul" ? "accepted" : "missed";
+    statusTracker.Akhil = name === "Akhil" ? "accepted" : "missed";
+
+    document.getElementById("rahulAlarm").style.display = "none";
+    document.getElementById("akhilAlarm").style.display = "none";
+
+    document.getElementById("rahulStatus").style.display = "block";
+    document.getElementById("akhilStatus").style.display = "block";
+
+    if (name === "Rahul") {
+        document.getElementById("rahulStatus").innerHTML =
+            "✅ <b>You Accepted!</b><br>Proceed to hospital.";
+        document.getElementById("rahulStatus").style.color = "#27ae60";
+
+        document.getElementById("akhilStatus").innerHTML =
+            "❌ <b>Match Found!</b><br>Another volunteer is responding.";
+        document.getElementById("akhilStatus").style.color = "#999";
+    } else {
+        document.getElementById("akhilStatus").innerHTML =
+            "✅ <b>You Accepted!</b><br>Proceed to hospital.";
+        document.getElementById("akhilStatus").style.color = "#27ae60";
+
+        document.getElementById("rahulStatus").innerHTML =
+            "❌ <b>Match Found!</b><br>Another volunteer is responding.";
+        document.getElementById("rahulStatus").style.color = "#999";
+    }
+
+    document.getElementById("patientStatusText").textContent =
+        "✅ SUCCESS! Volunteer " + name + " accepted the request.";
+
+    document.getElementById("patientStatusText").style.color = "#16803c";
+}
+
+function rejectRequest(name) {
+
+    if (!requestActive || requestAccepted) return;
+
+    statusTracker[name] = "rejected";
+
+    const alarmId = name === "Rahul" ? "rahulAlarm" : "akhilAlarm";
+    const statusId = name === "Rahul" ? "rahulStatus" : "akhilStatus";
+
+    document.getElementById(alarmId).style.display = "none";
+    document.getElementById(statusId).style.display = "block";
+
+    document.getElementById(statusId).innerHTML =
+        "❌ <b>You Rejected</b><br>Waiting for another volunteer.";
+    document.getElementById(statusId).style.color = "#c0392b";
+
+    if (
+        statusTracker.Rahul === "rejected" &&
+        statusTracker.Akhil === "rejected"
+    ) {
+        document.getElementById("patientStatusText").textContent =
+            "⚠️ ALERT UNMATCHED! All available demo volunteers rejected the request.";
+
+        document.getElementById("patientStatusText").style.color = "#c0392b";
+        requestActive = false;
+    } else {
+        document.getElementById("patientStatusText").textContent =
+            "🔄 " + name + " rejected. Alert remains available for another volunteer.";
+
+        document.getElementById("patientStatusText").style.color = "#e67e22";
+    }
+}
+</script>
+
+</body>
+</html>
